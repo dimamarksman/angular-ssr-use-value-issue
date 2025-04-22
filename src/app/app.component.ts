@@ -1,12 +1,17 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+
+import { MY_DATA_PROVIDER } from './contants';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  imports: [],
+  template: '<h1>Count: {{provider.count()}}</h1>',
 })
 export class AppComponent {
-  title = 'ssr-demo';
+  readonly provider = inject(MY_DATA_PROVIDER);
+
+  constructor() {
+    // increment data on every run
+    this.provider.count.update(value => value + 1);
+  }
 }
